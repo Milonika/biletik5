@@ -1,0 +1,55 @@
+﻿@page "/fetchdata"
+
+@using biletik5.Data
+@inject WeatherForecastService ForecastService
+
+<h1>Name</h1>
+<input type="text" @bind="inputName" />
+<h1>Surname</h1>
+<input type="text" @bind="inputSurame" />
+<br> <button @onclick="Add" >Add</button>
+
+
+@if (users == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in users)
+            {
+                <tr>
+                    <td>@forecast.Name</td>
+                    <td>@forecast.Surame</td>
+                    <td>@forecast.DateOfAdding</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    private string inputName;
+    private string inputSurame;
+
+    public static List<User> users = User.users;
+    public static List<string> title = User.title;
+
+    public void Add(MouseEventArgs e)
+    {
+        if (e.Button == 0)
+        {
+            users.Add(new User( inputName, inputSurame, DateTime.Now));
+        }
+    }
+}
